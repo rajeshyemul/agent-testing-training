@@ -11,7 +11,8 @@
     "types": ["node"],
     "paths": {
       "@src/*": ["./src/*"],
-      "@config/*": ["./config/*"]
+      "@config/*": ["./config/*"],
+      "@tests/*": ["./tests/*"]
     }
   },
   "include": ["src/**/*.ts", "tests/**/*.ts"]
