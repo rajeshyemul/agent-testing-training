@@ -22,7 +22,8 @@ export class AgentRuntime {
     const output = await this.llmClient.generate(
       config.instructions,
       input.input,
-      config.model
+      config.model,
+      config.temperature
     );
 
     return {

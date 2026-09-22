@@ -24,11 +24,13 @@ export class LLMClient {
   async generate(
     instructions: string,
     input: string,
-    model: string
+    model: string,
+    temperature?: number
   ): Promise<string> {
 
     const response = await this.client.chat.completions.create({
       model,
+      temperature,
       messages: [
         { role: "system", content: instructions },
         { role: "user", content: input }
