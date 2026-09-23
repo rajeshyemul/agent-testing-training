@@ -156,6 +156,10 @@ The test suite is organized into distinct categories under `tests/`:
 | **TC014** | Contract Violation | `output-contract/contract-violations.test.ts` | Rejects unexpected fields via `.strict()` contract enforcement (deterministic). |
 | **TC015** | Contract Violation | `output-contract/contract-violations.test.ts` | Rejects empty required strings violating `min(1)` (deterministic). |
 | **TC016** | Parsing Boundary | `output-contract/contract-violations.test.ts` | Rejects raw Markdown code fences failing strict JSON parsing. |
+| **TC017** | Prompt Injection | `prompt-injection/direct-injection.test.ts` | Resists direct instruction override; preserves authentic requirement. |
+| **TC018** | Prompt Injection | `prompt-injection/role-hijacking.test.ts` | Resists role/persona hijacking; preserves requirement analysis task. |
+| **TC019** | Prompt Injection | `prompt-injection/data-instruction-boundary.test.ts` | Distinguishes untrusted data from instructions; flags embedded conflicts without executing them. |
+| **TC020** | Prompt Injection | `prompt-injection/output-manipulation.test.ts` | Resists format manipulation attempts; enforces strict Zod schema contract. |
 
 ---
 
@@ -214,7 +218,8 @@ agent-testing-training/
 ├── tests/
 │   ├── assertions/                       # 3-tier assertion helpers
 │   │   ├── agentAssertions.ts            # Level 1: Framework assertions (identity)
-│   │   └── requirementAssertions.ts      # Level 2: Contract assertions (Zod validation)
+│   │   ├── requirementAssertions.ts      # Level 2: Contract assertions (Zod validation)
+│   │   └── promptInjectionAssertions.ts  # Level 3: Security & injection resistance assertions
 │   ├── contracts/                        # Schema unit tests (independent of LLM)
 │   │   └── requirement-analysis-schema.test.ts
 │   ├── support/                          # Test infrastructure
@@ -236,9 +241,14 @@ agent-testing-training/
 │       │   ├── explicit-details.test.ts
 │       │   ├── contradictory-evidence.test.ts
 │       │   └── unsupported-inference.test.ts
-│       └── output-contract/              # Contract tests (TC011-TC016)
-│           ├── output-contract.test.ts
-│           └── contract-violations.test.ts
+│       ├── output-contract/              # Contract tests (TC011-TC016)
+│       │   ├── output-contract.test.ts
+│       │   └── contract-violations.test.ts
+│       └── prompt-injection/             # Adversarial prompt injection tests (TC017-TC020)
+│           ├── direct-injection.test.ts
+│           ├── role-hijacking.test.ts
+│           ├── data-instruction-boundary.test.ts
+│           └── output-manipulation.test.ts
 ├── package.json
 ├── tsconfig.json                         # TypeScript compiler configuration & path aliases (@src/*, @tests/*)
 └── vitest.config.ts                      # Test runner settings (timeouts & sequential execution for APIs)
@@ -330,6 +340,7 @@ npm run build
 ### Agent Behavior & Contracts
 - [x] **Stage 7 - Grounding, Hallucination & Evidence (TC007–TC010)**
 - [x] **Stage 9 - Output Contracts & Schema Boundary Testing (TC011–TC016)**
+- [x] **Stage 10 - Prompt Injection & Adversarial Boundary Testing (TC017–TC020)**
 - [ ] **Stage 4.5 - From Reasoning to Acting**
 - [ ] **Stage 5 - Tool-Calling Agents & Action Loops**
 - [ ] **Stage 6 - Boundaries, Guardrails & Failure Containment**

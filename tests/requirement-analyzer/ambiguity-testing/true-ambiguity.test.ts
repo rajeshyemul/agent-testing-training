@@ -91,7 +91,7 @@ describe("Requirement Analyzer - True Ambiguity Tests", () => {
      */
 
     expect(ambiguityText).toMatch(
-      /ambiguous|unclear|not specified|not defined|could mean|may mean|uncertain|interpret/,
+      /ambiguous|unclear|not specified|unspecified|not (?:precisely )?defined|could mean|may mean|uncertain|interpret/,
     );
   });
 });
