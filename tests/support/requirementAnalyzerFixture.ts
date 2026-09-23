@@ -2,10 +2,10 @@ import { AgentConfigLoader } from "@src/config/AgentConfigLoader.js";
 import { AgentRuntime } from "@src/runtime/AgentRuntime.js";
 import { LLMClient } from "@src/llm/LLMClient.js";
 import { AgentTestHarness } from "./agentTestHarness.js";
-import type { AgentTestExecution, RequirementAnalysisOutput } from "./agentTestTypes.js";
+import type { AgentTestExecution } from "./agentTestTypes.js";
 
 export interface RequirementAnalyzerFixture {
-  run(input: string): Promise<AgentTestExecution<RequirementAnalysisOutput>>;
+  run(input: string): Promise<AgentTestExecution>;
 }
 
 /**
@@ -19,9 +19,8 @@ export function createRequirementAnalyzerFixture(): RequirementAnalyzerFixture {
   const harness = new AgentTestHarness(runtime);
 
   return {
-    async run(input: string): Promise<AgentTestExecution<RequirementAnalysisOutput>> {
-      return harness.run<RequirementAnalysisOutput>(config, { input });
+    async run(input: string): Promise<AgentTestExecution> {
+      return harness.run(config, { input });
     }
   };
 }
-

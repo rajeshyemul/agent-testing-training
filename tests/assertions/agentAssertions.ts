@@ -6,7 +6,7 @@ import type { AgentTestExecution } from "@tests/support/agentTestTypes.js";
  * Verifies that the agent identity, version, and execution payload are valid.
  */
 export function expectAgentIdentity(
-  execution: AgentTestExecution<unknown>,
+  execution: AgentTestExecution,
   expectedId = "requirement-analyzer",
   expectedVersion = "1.0.0"
 ): void {

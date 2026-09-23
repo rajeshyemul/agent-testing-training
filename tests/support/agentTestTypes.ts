@@ -1,24 +1,15 @@
 import type { AgentResult } from "@src/types/AgentTypes.js";
+import type { RequirementAnalysisOutput } from "@src/contracts/RequirementAnalysisSchema.js";
 
-/**
- * Expected schema contract for the Requirement Analyzer Agent.
- */
-export interface RequirementAnalysisOutput {
-  actor: string;
-  feature: string;
-  preconditions: string[];
-  positiveScenarios: string[];
-  negativeScenarios: string[];
-  ambiguities: string[];
-}
+export type { RequirementAnalysisOutput };
 
 /**
  * Observation record produced by the Agent Test Harness.
- * Preserves the pristine LLM string alongside the normalized/parsed representation.
+ * Holds the pristine raw LLM output and the unvalidated parsed JSON (unknown).
+ * Validation against Zod contracts happens in the evaluation layer.
  */
-export interface AgentTestExecution<T = RequirementAnalysisOutput> {
+export interface AgentTestExecution {
   result: AgentResult;
   rawOutput: string;
-  parsedOutput: T;
+  parsedOutput: unknown;
 }
-

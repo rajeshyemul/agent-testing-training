@@ -14,11 +14,10 @@ describe("Requirement Analyzer - Functional Tests", () => {
     // Level 1: Framework assertion
     expectAgentIdentity(execution);
 
-    // Level 2: Contract assertion
-    expectRequirementAnalysisSchema(execution.parsedOutput);
+    // Level 2: Contract assertion (validates and types the output)
+    const parsed = expectRequirementAnalysisSchema(execution.parsedOutput);
 
     // Level 3: Scenario functional behavior
-    const parsed = execution.parsedOutput;
     expect(parsed.actor.toLowerCase()).toContain("user");
     expect(parsed.feature.toLowerCase()).toContain("password");
     expect(parsed.feature.toLowerCase()).toContain("reset");

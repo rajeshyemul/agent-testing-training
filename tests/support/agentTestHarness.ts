@@ -1,39 +1,26 @@
 import type { AgentConfig, AgentInput } from "@src/types/AgentTypes.js";
 import type { AgentRuntime } from "@src/runtime/AgentRuntime.js";
-import type { AgentTestExecution, RequirementAnalysisOutput } from "./agentTestTypes.js";
-
-/**
- * Normalizes presentation artifacts (e.g. markdown code fences, outer whitespace)
- * without attempting to repair semantic or malformed JSON syntax errors.
- */
-export function normalizeJsonOutput(raw: string): string {
-  return raw
-    .replace(/^```json\s*/i, "")
-    .replace(/^```\s*/i, "")
-    .replace(/```\s*$/i, "")
-    .trim();
-}
+import type { AgentTestExecution } from "./agentTestTypes.js";
 
 /**
  * Generic Agent Test Harness.
- * Responsible for agent execution, capturing raw model output, normalizing presentation
- * artifacts, and parsing structured outputs.
+ * Responsible for agent execution, capturing raw model output, and strict JSON parsing.
+ * Does not silently repair presentation or contract violations (e.g. markdown fences).
  */
 export class AgentTestHarness {
   constructor(private readonly runtime: AgentRuntime) {}
 
-  async run<T = RequirementAnalysisOutput>(
+  async run(
     config: AgentConfig,
     input: AgentInput
-  ): Promise<AgentTestExecution<T>> {
+  ): Promise<AgentTestExecution> {
     const result = await this.runtime.run(config, input);
 
     // Genuinely raw output from the model
     const rawOutput = result.output;
 
-    // Normalize presentation fences before parsing
-    const cleanedOutput = normalizeJsonOutput(rawOutput);
-    const parsedOutput = JSON.parse(cleanedOutput) as T;
+    // Strict JSON parsing directly against raw output
+    const parsedOutput: unknown = JSON.parse(rawOutput.trim());
 
     return {
       result,
@@ -42,4 +29,3 @@ export class AgentTestHarness {
     };
   }
 }
-
