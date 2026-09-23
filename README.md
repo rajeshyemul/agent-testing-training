@@ -6,7 +6,7 @@ Rather than treating Large Language Models as black-box chatbots or testing sing
 
 ---
 
-## 🏛️ The 4-Layer Architecture
+## 🏛️ The 4 Layer Architecture
 
 The platform separates agent definitions, execution runtime, model access, and test evaluation:
 
@@ -45,13 +45,13 @@ flowchart TD
 
 ### Layer Breakdown
 
-1. **Layer 1 — Agent Definition (`config/agents/*.md`)**  
+1. **Layer 1 - Agent Definition (`config/agents/*.md`)**  
    The behavioral contract of the agent written in Markdown with YAML frontmatter. Defines identity (`agentId`, `version`), target model parameters (`model`, `temperature: 0`), operational role, negative rules, and output format.
-2. **Layer 2 — Agent Runtime (`src/runtime/`, `src/config/`)**  
+2. **Layer 2 - Agent Runtime (`src/runtime/`, `src/config/`)**  
    TypeScript execution engine. Completely agnostic to the agent's domain logic. Loads configs, prepares execution context, propagates configuration parameters (including `temperature`), calls the injected LLM gateway, and wraps output into typed `AgentResult` execution payloads.
-3. **Layer 3 — Model Gateway (`src/llm/LLMClient.ts`)**  
+3. **Layer 3 - Model Gateway (`src/llm/LLMClient.ts`)**  
    LLM gateway that currently connects to Google Gemini through its OpenAI-compatible API. The runtime depends on the gateway rather than directly depending on a model provider, allowing provider abstraction to evolve independently.
-4. **Layer 4 — Evaluation & Testing (`tests/`, `src/contracts/`)**  
+4. **Layer 4 - Evaluation & Testing (`tests/`, `src/contracts/`)**  
    Structured into three distinct tiers:
    - **Test Harness & Fixtures (`tests/support/`)**: Decouples execution and observation (`rawOutput` and `parsedOutput`) from tests.
    - **Runtime Output Contract (`src/contracts/`)**: Validates schema, field types, and strict keys using Zod before semantic assertions run.
@@ -59,7 +59,7 @@ flowchart TD
 
 ---
 
-## 🎯 Stage 1 — Requirement Analyzer Agent
+## 🎯 Stage 1 - Requirement Analyzer Agent
 
 The first agent built and evaluated on this platform is the **Requirement Analyzer Agent**.
 
@@ -321,19 +321,19 @@ npm run build
 ## 🗺️ Learning & Implementation Roadmap
 
 ### Foundation
-- [x] **Stage 1 — Configuration-Driven Agent Runtime**
-- [x] **Stage 2 — Requirement Analyzer Agent Contract**
-- [x] **Stage 3 — Functional Testing**
-- [x] **Stage 3.5 — The AI Test Oracle**
-- [x] **Stage 4 — Reasoning and Ambiguity Testing**
+- [x] **Stage 1 - Configuration-Driven Agent Runtime**
+- [x] **Stage 2 - Requirement Analyzer Agent Contract**
+- [x] **Stage 3 - Functional Testing**
+- [x] **Stage 3.5 - The AI Test Oracle**
+- [x] **Stage 4 - Reasoning and Ambiguity Testing**
 
 ### Agent Behavior & Contracts
-- [x] **Stage 7 — Grounding, Hallucination & Evidence (TC007–TC010)**
-- [x] **Stage 9 — Output Contracts & Schema Boundary Testing (TC011–TC016)**
-- [ ] **Stage 4.5 — From Reasoning to Acting**
-- [ ] **Stage 5 — Tool-Calling Agents & Action Loops**
-- [ ] **Stage 6 — Boundaries, Guardrails & Failure Containment**
+- [x] **Stage 7 - Grounding, Hallucination & Evidence (TC007–TC010)**
+- [x] **Stage 9 - Output Contracts & Schema Boundary Testing (TC011–TC016)**
+- [ ] **Stage 4.5 - From Reasoning to Acting**
+- [ ] **Stage 5 - Tool-Calling Agents & Action Loops**
+- [ ] **Stage 6 - Boundaries, Guardrails & Failure Containment**
 
 ### Agent Systems & Governance
-- [ ] **Stage 8 — Multi-Agent Testing & Agent Contracts**
-- [ ] **Stage 10 — Production Agent QE & CI/CD Quality Gates**
+- [ ] **Stage 8 - Multi-Agent Testing & Agent Contracts**
+- [ ] **Stage 10 - Production Agent QE & CI/CD Quality Gates**
